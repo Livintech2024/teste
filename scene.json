@@ -1,0 +1,20 @@
+{
+    "sceneName": "Modo noturno",
+    "sceneDevices": [
+        {
+            "deviceIrId": 1,
+            "deviceLoadId": null,
+            "value": ""
+        },
+        {
+            "deviceIrId": 1,
+            "deviceLoadId": null,
+            "value": ""
+        },
+        {
+            "deviceIrId": 1,
+            "deviceLoadId": null,
+            "value": ""
+        }
+    ]
+}

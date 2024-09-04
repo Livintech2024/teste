@@ -1,0 +1,237 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User{
+    id Int @id @default(autoincrement())
+    name String
+    email String @unique
+    avatar String?
+    password String
+    isAdmin Boolean @default(false)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    relayModule RelayModule []
+    irgbModule IRGBModule []
+    clients Client []
+    spaces Space []
+    scenes Scene []
+    events Event []
+    @@map("users")
+}
+
+model Client{
+    id Int @id @default(autoincrement())
+    userId Int
+    user User @relation(fields: [userId], references: [id])
+    name String
+    email String @unique
+    avatar String?
+    password String
+    isAdmin Boolean @default(false)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    spaces Space []
+    scenes Scene []
+    events Event []
+    @@map("clients")
+}
+
+model RelayModule {
+    id Int @id @default(autoincrement())
+    userId Int 
+    user User @relation(fields: [userId], references: [id])
+    moduleName String @db.VarChar(20)
+    moduleState String @db.VarChar(20)
+    moduleStatus String @db.VarChar(20)
+    moduleMac String @unique @db.VarChar(20)
+    //moduleIP String @db.VarChar(16)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    outputs OutputRelay[]
+    inputs Input[]
+    @@map("relay_modules")
+}
+
+model IRGBModule {
+    id Int @id @default(autoincrement())
+    userId Int 
+    user User @relation(fields: [userId], references: [id])
+    moduleName String @db.VarChar(20)
+    moduleState String @db.VarChar(20)
+    moduleStatus String @db.VarChar(20)
+    moduleMac String @unique @db.VarChar(20)
+    //moduleIP String @db.VarChar(16)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    outputsRGB OuputRGB []
+    outputsIR OutputIR []
+    @@map("irgb_modules")
+}
+
+model Input {
+    id Int @id @default(autoincrement())
+    numInput Int 
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    relayModule RelayModule @relation(fields: [relayModuleId], references: [id])
+    relayModuleId Int 
+    events Event []
+    devicesLoad DeviceLoad [] 
+    devicesIR DeviceIR []
+    @@map("inputs")
+}
+
+model OutputRelay {
+    id Int @id @default(autoincrement())
+    relayModule RelayModule? @relation(fields: [relayModuleId], references: [id])
+    relayModuleId Int?
+    outputFunction String? @default("Undefined")
+    outputType String?
+    numOutput Int
+    timeOn Int ?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deviceLoad DeviceLoad? 
+    outputState Boolean? @default(false)
+    events Event []
+
+    @@map("output_relays")
+}
+
+model OuputRGB {
+    id Int @id @default(autoincrement())
+    irgbModule IRGBModule? @relation(fields: [irgbModuleId], references: [id])
+    irgbModuleId Int?
+    numOutput Int
+    color Int
+    @@map("output_rgbs")
+}
+
+model OutputIR {
+    id Int @id @default(autoincrement())
+    irgbModule IRGBModule? @relation(fields: [irgbModuleId], references: [id])
+    irgbModuleId Int?
+    outputType String @db.VarChar(20)
+    outputState Boolean? @default(false)
+    numOutput Int
+    deviceIR DeviceIR? 
+    @@map("output_irs")
+}
+
+model DeviceLoad {
+    id Int @id @default(autoincrement())
+    outputRelay OutputRelay @relation(fields: [outputId], references: [id])
+    outputId Int @unique
+    space Space @relation(fields: [spaceId], references: [id])
+    spaceId Int 
+    input Input ? @relation(fields: [inputId], references: [id])
+    inputId Int ?
+    status String?
+    inputTrigger String? @db.VarChar(10)
+    deviceType String @db.VarChar(64)
+    deviceName String @db.VarChar(64)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    pairId String? @db.VarChar(15)
+    event Event []
+    @@map("devices_load")
+}
+
+model DeviceIR {
+    id Int @id @default(autoincrement())
+    outputIrId Int @unique
+    ouputIr OutputIR @relation(fields: [outputIrId], references: [id])
+    space Space @relation(fields: [spaceId], references: [id])
+    spaceId Int 
+    deviceName String @db.VarChar(24)
+    deviceIrType String @db.VarChar(24)
+    input Input ?@relation(fields: [inputId], references: [id])
+    inputId Int ?
+    status String?
+    inputTrigger String? @db.VarChar(10)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    pairId String? @db.VarChar(15)
+    event Event []
+    @@map("devices_ir")
+}
+
+model Space {
+    id Int @id @default(autoincrement())
+    userId Int 
+    clients Client []
+    user User @relation(fields: [userId], references: [id])
+    spaceName String
+    image String
+    devicesIR DeviceIR [] 
+    devicesLoad DeviceLoad []
+    scene Scene?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    @@map("spaces")
+}
+
+
+model Event {
+    id Int @id @default(autoincrement())
+    userId Int 
+    clients Client []
+    user User @relation(fields: [userId], references: [id])
+    eventType String @db.VarChar(32)
+    isInstantaneos Boolean @default(false)
+    eventName String  @db.VarChar(32)
+    deviceIR DeviceIR? @relation(fields: [deviceIrId], references: [id])
+    deviceIrId Int?
+    deviceLoad DeviceLoad? @relation(fields: [deviceLoadId], references: [id])
+    deviceLoadId Int?
+    input Input? @relation(fields: [inputId], references: [id])
+    inputId Int?
+    output OutputRelay? @relation(fields: [outputId], references: [id])
+    outputId Int ?
+    scene Scene ? @relation(fields: [sceneId], references: [id])
+    sceneId Int?
+    startTime DateTime?
+    endTime DateTime?
+    createdAt   DateTime @default(now())
+    inputType String? @db.VarChar(10)
+    @@map("events")
+}
+
+model Device {
+    id          Int      @id @default(autoincrement())
+    checked     Boolean  @default(true)
+    deviceId    Int
+    deviceLoadId Int
+    deviceName  String
+    eventName   String
+    mode        String
+    stateName   String
+    createdAt   DateTime @default(now())
+    value       Int      @default(0)
+    updatedAt   DateTime @updatedAt
+    scenes      Scene[] 
+    @@map("devices")
+}
+
+model Scene {
+    id Int @id @default(autoincrement())
+    userId Int 
+    clients Client []
+    user User @relation(fields: [userId], references: [id])
+    spaceId Int? @unique
+    space Space? @relation(fields: [spaceId], references: [id])
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    sceneName String @db.VarChar(32)
+    sceneImg String? @db.VarChar(80)
+    devices Device []
+    event Event []
+    @@map("scenes")
+}

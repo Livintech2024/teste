@@ -1,0 +1,536 @@
+
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "API LIVINTECH",
+        "description": "API for use LIVINTECH Smart Home",
+        "version": "1.0.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/api/v1/user": {
+            "post": {
+                "tags": ["User"],
+               "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "avatar": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                },
+                                "isAdmin": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+               },
+               "responses": {
+                "200": {
+                  "description": "Error: false",
+                  "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref":  "#/components/schemas/User"
+    
+                        }
+                        
+                    }
+                  }
+                }
+               } 
+            },
+            "put": {
+                "tags": ["User"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Deived'"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "deived.william@live.com"
+
+                                    },
+                                    "avatar": {
+                                        "type": "string",
+                                        "example": "/src/img'"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "1234567"
+                                    },
+                                    "isAdmin": {
+                                        "type": "boolean",
+                                        "example": "false'"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                   },
+                   "responses": {
+                    "200": {
+                        "description": "Error: false",
+                        "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref":  "#/components/schemas/User"
+          
+                              }
+                              
+                          }
+                        }
+                      }
+                   }
+            }
+            
+        },
+        "/api/v1/user/:id": {
+            "get": {
+                "summary": "Find user by id", 
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": "true",
+                        "description": "Numeric ID of the user to get"
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "delete user by id", 
+                "tags": ["User"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": "true",
+                        "description": "Numeric ID of the user to delete"
+                    }
+                ]
+            }
+        },
+        "/api/v1/users": {
+            "get": {
+                "summary": "Find all users", 
+                "tags": ["User"]
+            }
+        },
+
+        "/api/v1/relaymodule": {
+            "post":{
+                "tags": ["RelayModule"]
+
+            },
+            "put": {
+                "tags": ["RelayModule"]
+
+            }
+        },
+        "/api/v1/relaymodule/:id": {
+            "get": {
+                "summary": "Find relay module by id", 
+                "tags": ["RelayModule"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": "true",
+                        "description": "Numeric ID of the relay module to delete"
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "delete relay module by id", 
+                "tags": ["RelayModule"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": "true",
+                        "description": "Numeric ID of the relay module to delete"
+                    }
+                ]
+            }
+        },
+        "/api/v1/relaymodules": {
+            "get": {
+                "summary": "Find all relay modules", 
+                "tags": ["RelayModule"]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    } ,
+                    "name": {
+                        "type": "string",
+                        "example": "Deived"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "deived@industriaswilliam.com"
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "example": "/src/img"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "12345678"
+                    },
+                    "isAdmin": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "example": "2023-12-04T19:28:04.057Z"
+                    },
+                    "updateAt": {
+                        "type": "string",
+                        "example": "2023-12-04T19:28:04.057Z"
+                    }
+                }
+            },
+            "RelayModule": {
+               "type": "object",
+               "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "moduleName": {
+                    "type": "string"
+                },
+                "moduleState": {
+                    "type": "string"
+                },
+                "moduleMac": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "updateAt": {
+                    "type": "string"
+                },
+                "outputs": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "inputs": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+               }
+            },
+            "IRGBModule": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "moduleName": {
+                        "type": "string"
+                    },
+                    "moduleState": {
+                        "type": "string"
+                    },
+                    "moduleStatus":{
+                        "type": "string"
+                    },
+                    "moduleMac": {
+                        "type": "string"
+                    },
+                    "moduleIP": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "integer"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updateAt": {
+                        "type": "string"
+                    },
+                    "deviceIR": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "Input": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "inputType": {
+                        "type": "string",
+                        "enum": ["Pulse", "Hold'"]
+                    },
+                    "numInput": {
+                        "type": "integer"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updateAt": {
+                        "type": "string"
+                    },
+                    "relayModuleId": {
+                        "type": "integer"
+                    },
+                    "event": {
+                        "type": "array",
+                        "items":{
+                            "type": "object",
+                            "$ref": "#/components/schemas/Event"
+                        }
+                    }
+                }
+            },
+            "Output": {
+                "type": "oject",
+                "properties": {
+                    "relayModuleId": {
+                        "type": "integer"
+                    },
+                    "outputType": {
+                        "type": "string",
+                        "enum": ["On-Off", "Timed", "On", "Off"]
+                    },
+                    "numOutput": {
+                        "type": "integer"
+                    },
+                    "timeOn":{
+                        "type": "integer"
+                    },
+                    "outputState": {
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updateAt": {
+                        "type": "string"
+                    },
+                    "deviceLoad": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/DeviceLoad"
+                    }
+                }
+            },
+            "DeviceLoad": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "outputId": {
+                        "type": "integer"
+                    },
+                    "spaceId": {
+                        "type": "integer"
+                    },
+                    "loadType": {
+                        "type": "string",
+                        "enum": ["Light", "Curtain"]
+                    },
+                    "deviceName": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updateAt": {
+                        "type": "string"
+                    },
+                    "event": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/Event"
+                        }
+                    }
+                }
+            },
+            "DeviceIR": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "irgbId": {
+                        "type": "integer"
+                    },
+                    "spaceId": {
+                        "type": "integer"
+                    },
+                    "irType": {
+                        "type": "string",
+                        "enum": ["TV", "AirConditioner"]
+                    },
+                    "deviceIRName": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updateAt": {
+                        "type": "string"
+                    },
+                    "event": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/Event"
+                        }
+                    }
+                }
+            },
+            "Space": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "spaceName": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "devicesIR": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/DeviceIR"
+                        }
+                    },
+                    "devicesLoad": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/DeviceLoad"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updateAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Scene": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updateAt": {
+                        "type": "string"
+                    },
+                    "spaceName": {
+                        "type": "string"
+                    },
+                    "event": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/Event"
+                        }
+                    }
+                }
+            },
+            "Event": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "eventType": {
+                        "type": "string",
+                        "enum": ["TurnOn-Light", "TurnOff-Light", "Open-Curtain", "Close-Curtain"]
+                    },
+                    "eventName": {
+                        "type": "string"
+                    },
+                    "deviceIrId": {
+                        "type": "integer"
+                    },
+                    "deviceLoadId": {
+                        "type": "integer"
+                    },
+                    "inputId": {
+                        "type": "integer"
+                    },
+                    "sceneId": {
+                        "type": "integer"
+                    },
+                    "startTime": {
+                        "type": "string"
+                    },
+                    "endTime": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    }
+                }
+            }
+            
+        }
+    }
+}

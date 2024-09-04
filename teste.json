@@ -1,0 +1,62 @@
+[
+    {
+        "createdAt": "2024-02-22T03:08:07.593Z",
+        "deviceIrType": "Air-Conditioner",
+        "deviceName": "Ar condicionado - Sala",
+        "id": 1,
+        "inputId": null,
+        "inputTrigger": null,
+        "outputIrId": 6,
+        "pairId": null,
+        "spaceId": 2,
+        "updatedAt": "2024-02-22T03:08:07.593Z"
+    },
+    {
+        "createdAt": "2024-02-22T03:08:40.489Z",
+        "deviceIrType": "RGB",
+        "deviceName": "RGB - Sala",
+        "id": 2,
+        "inputId": null,
+        "inputTrigger": null,
+        "outputIrId": 7,
+        "pairId": null,
+        "spaceId": 2,
+        "updatedAt": "2024-02-22T03:08:40.489Z"
+    },
+    {
+        "createdAt": "2024-02-22T03:09:08.097Z",
+        "deviceIrType": "Tv",
+        "deviceName": "Tv - Sala",
+        "id": 3,
+        "inputId": null,
+        "inputTrigger": null,
+        "outputIrId": 8,
+        "pairId": null,
+        "spaceId": 2,
+        "updatedAt": "2024-02-22T03:09:08.097Z"
+    },
+    {
+        "createdAt": "2024-02-22T03:00:35.447Z",
+        "deviceName": "Lâmpada - Sala",
+        "deviceType": "Light",
+        "id": 5,
+        "inputId": null,
+        "inputTrigger": null,
+        "outputId": 1,
+        "pairId": "",
+        "spaceId": 2,
+        "updatedAt": "2024-02-22T03:05:11.138Z"
+    },
+    {
+        "createdAt": "2024-02-22T03:01:11.377Z",
+        "deviceName": "Cortina - Fechar",
+        "deviceType": "Curtain",
+        "id": 6,
+        "inputId": null,
+        "inputTrigger": null,
+        "outputId": 3,
+        "pairId": "4us8FjP0V",
+        "spaceId": 2,
+        "updatedAt": "2024-02-22T03:18:29.772Z"
+    }
+]
